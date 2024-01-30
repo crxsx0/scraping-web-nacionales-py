@@ -37,8 +37,10 @@ def quitar_tildes(texto):
     )
     return texto_sin_tildes
 
+'''Hace scroll hasta que termina que la cantidad de datos mostrados en la pagina sea igual a la cantidad de elementos totales '''
 async def scroll_infinito(page, selector, cantidad):
     while True:
+        #Ejecuta codigo de javascript para saber que cantidad esta mostrando la pgina
         elemento = await page.evaluate('''selector => {
             return document.querySelector(selector).innerText;
         }''', selector);
@@ -48,21 +50,21 @@ async def scroll_infinito(page, selector, cantidad):
 
         await page.keyboard.press('End')
         await page.wait_for_timeout(1000)
-
+'''Extrae elementos con codigo de javascript y retorna una lista con estos'''
 async def extraer_lista_elementos_texto(page, selector):
     lista = await page.evaluate('''selector => {
             const elementos = Array.from(document.querySelectorAll(selector));
             return elementos.map(elemento => elemento.innerText);
         }''', selector);
     return lista
-    
+'''Extrae links y retorna una lista con los links'''
 async def extraer_lista_links(page, selector):
     lista = await page.evaluate('''selector => {
             const elementos = Array.from(document.querySelectorAll(selector));
             return elementos.map(elemento => elemento.href);
         }''', selector)
     return lista
-
+'''Limpia un string precio, y retorna el precio como un entero"'''
 def limpiar_formato_moneda(precio):
     # Elimina el símbolo de moneda y convierte a número
     return int(precio.replace('$', '').replace('.', ''))
