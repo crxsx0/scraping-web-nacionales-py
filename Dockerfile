@@ -1,3 +1,4 @@
+#Usa la imagen para docker de playwright en python https://playwright.dev/python/docs/docker
 FROM mcr.microsoft.com/playwright/python:v1.41.0-jammy
 
 # Establecer el directorio de trabajo en el contenedor
