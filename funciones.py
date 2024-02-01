@@ -1,5 +1,5 @@
-import pandas_gbq
-import unicodedata
+import pandas_gbq, construmart, unicodedata
+import pandas as pd
 from google.cloud import storage
 
 '''Esta funcion se encarga de subir el dataframe a la tabla correspondiente en BigQuery. Es importante tener instalada la libreria de pandas_gbq. La cuenta de servicio que se utilizara para ejecutar tiene que tener permisos para usar BigQuery'''
@@ -68,4 +68,3 @@ async def extraer_lista_links(page, selector):
 def limpiar_formato_moneda(precio):
     # Elimina el símbolo de moneda y convierte a número
     return int(precio.replace('$', '').replace('.', ''))
-

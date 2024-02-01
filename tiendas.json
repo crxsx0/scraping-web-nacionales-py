@@ -1,0 +1,12 @@
+{
+    "tiendas": [
+        {
+            "region": "XIII REGIÓN METROPOLITANA DE SANTIAGO",
+            "comuna": "LAS CONDES"
+        },
+        {
+            "region": "X LOS LAGOS",
+            "comuna": "OSORNO"
+        }
+    ]
+}
