@@ -55,14 +55,14 @@ async def scraping(p, region, comuna, fecha):
 
         #Crea el dataframe con cada una de las columnas
         df = pd.DataFrame({
-            'Link': links,
-            'Tienda': 'Construmart',
-            'Precio': precios_limpio,
-            'Marca' : marcas_sin_tildes,
-            'Descripcion': descripcion_sin_tildes,
-            'Region': funciones.quitar_tildes(region),
-            'Comuna': funciones.quitar_tildes(comuna),
-            'Fecha': fecha.strftime("%Y-%m-%d")
+            'fecha': fecha.strftime("%Y-%m-%d"),
+            'link': links,
+            'tienda': 'Construmart',
+            'precio': precios_limpio,
+            'marca' : marcas_sin_tildes,
+            'descripcion': descripcion_sin_tildes,
+            'region': funciones.quitar_tildes(region),
+            'comuna': funciones.quitar_tildes(comuna)
         })
         #Cierra el navegador
         await browser.close()
