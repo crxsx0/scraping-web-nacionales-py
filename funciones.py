@@ -49,9 +49,23 @@ async def scroll_infinito(page, selector, cantidad):
 
         if elemento == cantidad:
             break
+        await espera_elementos_pantalla(page,".vtex-search-result-3-x-showingProductsCount" ,".vtex-store-components-3-x-productBrandName")
 
-        await page.keyboard.press('End')
-        await page.wait_for_timeout(1000)
+async def espera_elementos_pantalla(page, selector_cantidad, selector_cards):
+    while True:
+        cantidad_elementos_pantalla = await page.evaluate('''selector => {
+            return document.querySelector(selector).innerText.split(' ')[0]
+        };
+        ''', selector_cantidad)
+        cantidad_cards = await page.evaluate('''selector => {
+            return document.querySelectorAll(selector).length                        
+        };
+        ''', selector_cards)
+        if int(cantidad_elementos_pantalla) == cantidad_cards:
+            break
+        else:
+            await page.keyboard.press('End')
+
 '''Extrae elementos con codigo de javascript y retorna una lista con estos'''
 async def extraer_lista_elementos_texto(page, selector):
     lista = await page.evaluate('''selector => {
@@ -123,5 +137,5 @@ def existencia_dataset_tabla(id_proyecto, id_dataset, id_tabla):
         print(f"La tabla {table_full_id} ya existe.")
     except NotFound:
         print(f"La tabla {table_full_id} no existe, creándola...")
-        creacion_tabla_bq(id_tabla)
+        creacion_tabla_bq(table_full_id)
         print(f"Tabla {table_full_id} creada con éxito.")
