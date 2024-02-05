@@ -5,7 +5,7 @@ import funciones
 async def scraping(p, region, comuna, fecha):
     async with async_playwright() as p:
         '''Inicia un navegador chromium, crea una pagina y luego va a la URL especificada, espera a ciertos selectores para luego elegir que region y comuna va a consultar'''
-        browser = await p.chromium.launch(headless= False)
+        browser = await p.chromium.launch(headless= True)
         page = await browser.new_page()
         await page.goto("https://www.construmart.cl/maderas-y-tableros")
         await page.wait_for_selector('.construmartcl-custom-apps-0-x-modalContent', timeout=50000)
