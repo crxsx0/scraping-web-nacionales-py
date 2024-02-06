@@ -3,7 +3,6 @@ import pandas as pd
 from google.cloud import storage
 from google.cloud import bigquery
 from google.cloud.exceptions import NotFound
-import time
 
 '''Esta funcion se encarga de subir el dataframe a la tabla correspondiente en BigQuery. Es importante tener instalada la libreria de pandas_gbq. La cuenta de servicio que se utilizara para ejecutar tiene que tener permisos para usar BigQuery'''
 def subir_dataframe_bq(dataframe, ruta_tabla):
