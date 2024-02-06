@@ -3,6 +3,7 @@ import pandas as pd
 from google.cloud import storage
 from google.cloud import bigquery
 from google.cloud.exceptions import NotFound
+import time
 
 '''Esta funcion se encarga de subir el dataframe a la tabla correspondiente en BigQuery. Es importante tener instalada la libreria de pandas_gbq. La cuenta de servicio que se utilizara para ejecutar tiene que tener permisos para usar BigQuery'''
 def subir_dataframe_bq(dataframe, ruta_tabla):
@@ -50,9 +51,17 @@ async def scroll_infinito(page, selector, cantidad):
         if elemento == cantidad:
             break
         await espera_elementos_pantalla(page,".vtex-search-result-3-x-showingProductsCount" ,".vtex-store-components-3-x-productBrandName")
+        
 
 async def espera_elementos_pantalla(page, selector_cantidad, selector_cards):
     while True:
+        await page.evaluate('''async () => {
+            const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+            for (let i = 0; i < document.body.scrollHeight; i += 100) {
+                window.scrollTo(0, i);
+                await delay(150);
+            }
+        }''')
         cantidad_elementos_pantalla = await page.evaluate('''selector => {
             return document.querySelector(selector).innerText.split(' ')[0]
         };
@@ -63,8 +72,6 @@ async def espera_elementos_pantalla(page, selector_cantidad, selector_cards):
         ''', selector_cards)
         if int(cantidad_elementos_pantalla) == cantidad_cards:
             break
-        else:
-            await page.keyboard.press('End')
 
 '''Extrae elementos con codigo de javascript y retorna una lista con estos'''
 async def extraer_lista_elementos_texto(page, selector):
