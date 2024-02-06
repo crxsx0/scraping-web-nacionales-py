@@ -91,7 +91,7 @@ def limpiar_formato_moneda(precio):
     # Elimina el símbolo de moneda y convierte a número
     return int(precio.replace('$', '').replace('.', ''))
 
-def creacion_tabla_bq (id_tabla):
+def creacion_tabla_bq (id_tabla, parametros):
     client = bigquery.Client()
 
     schema = [
@@ -106,12 +106,8 @@ def creacion_tabla_bq (id_tabla):
     ]
     
     tabla = bigquery.Table(id_tabla, schema=schema)
-    tabla.labels = {
-        "enviroment": "dev",
-        "project-owner": "datos-arquitectura",
-        "state": "active",
-        "team": "marketing-maderas"
-    }
+    tabla.labels = parametros["labels"]
+    tabla.description = parametros["descripcionTablas"]
     tabla.clustering_fields = ["fecha"]
 
     tabla.time_partitioning = bigquery.TimePartitioning(
@@ -120,7 +116,7 @@ def creacion_tabla_bq (id_tabla):
     ) 
     tabla = client.create_table(tabla)
 
-def existencia_dataset_tabla(id_proyecto, id_dataset, id_tabla):
+def existencia_dataset_tabla(id_proyecto, id_dataset, id_tabla, parametros):
     client = bigquery.Client(project=id_proyecto)
     
     dataset_full_id = f"{id_proyecto}.{id_dataset}"
@@ -143,5 +139,5 @@ def existencia_dataset_tabla(id_proyecto, id_dataset, id_tabla):
         print(f"La tabla {table_full_id} ya existe.")
     except NotFound:
         print(f"La tabla {table_full_id} no existe, creándola...")
-        creacion_tabla_bq(table_full_id)
+        creacion_tabla_bq(table_full_id, parametros)
         print(f"Tabla {table_full_id} creada con éxito.")

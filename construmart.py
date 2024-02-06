@@ -73,7 +73,7 @@ async def scraping(p, region, comuna, fecha):
 async def scraping_tiendas(p, tiendas, fecha):
     df_final = pd.DataFrame()
 
-    for tienda in tiendas['tiendas']:
+    for tienda in tiendas['tiendasConstrumart']:
         region = tienda['region']
         comuna = tienda['comuna']
         print(f"{region}, {comuna}")

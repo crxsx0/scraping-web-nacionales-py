@@ -1,12 +1,18 @@
 {
-    "tiendas": [
+    "tiendasConstrumart": [
         {
             "region": "XIII REGIÓN METROPOLITANA DE SANTIAGO",
             "comuna": "LAS CONDES"
-        },
-        {
-            "region": "X LOS LAGOS",
-            "comuna": "OSORNO"
         }
-    ]
+    ],
+
+    "labels": {
+        "environment": "dev",
+        "project-owner": "datos-arquitectura",
+        "state": "active",
+        "team": "marketing-maderas",
+        "ce-co": "1cl2704222"
+    },
+
+    "descripcionTablas": "Esta tabla almacena información detallada sobre los precios de distintos tipos de madera disponibles en tiendas nacionales. Cada registro incluye un enlace directo al producto, una descripción detallada del tipo de madera, el precio actual, la fecha en la que se extrajo la información del sitio web de la tienda, y la marca del producto. Esta tabla se actualiza regularmente para reflejar los cambios en los precios y proporcionar una referencia actualizada para análisis de mercado y tendencias de precios de maderas."
 }
