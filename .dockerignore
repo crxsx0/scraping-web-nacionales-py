@@ -1,6 +1,5 @@
 .gitignore
 env
 __pycache__
-cmpc-datos-soluciones-sandbox-d07dd883290d.json
 .env
 README.md

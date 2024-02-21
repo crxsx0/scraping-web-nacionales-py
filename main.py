@@ -1,11 +1,16 @@
-import os, construmart, funciones, json
-from playwright.async_api import async_playwright
+import os, construmart, funciones, json, sodimac, logging, easy
 from dotenv import load_dotenv
 from flask import Flask
 from datetime import datetime
 import pandas as pd
 #carga las variables de entorno
 load_dotenv()
+
+# Configurar el nivel de registro global
+logging.basicConfig(level=logging.DEBUG)
+
+'''Descomentar si esta en local. Es la KEY con los permisos para usar GCP'''
+#os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'permisos.json'
 
 app = Flask(__name__)
 '''Esta funcion ejecuta la funcion asincrona main, se activa haciendo una peticion GET a la URL de Cloud Run'''
@@ -20,28 +25,32 @@ async def main():
 
     #Path para Cloud Storage y Big Query
     nombre_archivo = fecha_extraccion.strftime("%Y%m%d")+".csv"
-    nombre_bucket = os.getenv("NOMBRE_BUCKET")
     nombre_dataset = os.getenv("NOMBRE_DATASET")
-    nombre_proyecto = os.getenv("NOMBRE_PROYECTO")
-    nombre_carpeta = 'construmart'
-    
+    nombre_proyecto= os.getenv("NOMBRE_PROYECTO")
+    nombre_bucket = os.getenv("NOMBRE_BUCKET")
+    #Path para construmart
+    nombre_carpeta_construmart = 'construmart_prueba'
+    #Path para sodimac
+    nombre_carpeta_sodimac = 'sodimac_prueba'
+    #Path para easy
+    nombre_carpeta_easy = 'easy_prueba'
+
     '''Esta funcion usa playwright de manera asincrona para ejecutar el scraping de cada pagina, luego crea el csv a partir de un dataframe lo sube a CLoud Storage y lo sube a Big Query'''
-    async with async_playwright() as p:
-        df_construmart = await construmart.scraping_tiendas(p, parametros, fecha_extraccion)
-        df_csv = df_construmart.to_csv(index= False)
-        ruta_csv = f'{nombre_carpeta}/{nombre_archivo}'
-        ruta_dfbq = f'{nombre_proyecto}.{nombre_dataset}.construmart'
-        df_construmart['fecha'] = pd.to_datetime(df_construmart['fecha'])
-        
-        try:
-            funciones.existencia_dataset_tabla(nombre_proyecto, nombre_dataset, nombre_carpeta, parametros)
-            #Se sube el dataframe en archivo csv a Cloud Storage
-            funciones.subir_dfcsv_cstorage(df_csv, ruta_csv, nombre_bucket)
-            #Se sube el dataframe a BigQuery
-            funciones.subir_dataframe_bq(df_construmart, ruta_dfbq)
-            return 'Archivo CSV y DataFrame subido exitosamente.'
-        except Exception as e:
-            return f'Hubo un error: {str(e)}'
+    df_construmart = await construmart.scraping_tiendas(parametros, fecha_extraccion)
+    df_sodimac = await sodimac.scraping(fecha_extraccion)
+    df_easy = await easy.scraping(fecha_extraccion)
+    
+    try:
+        #Sube dataframe de Construmart a GCP
+        funciones.subir_dataframe_cloud(df_construmart, nombre_proyecto, nombre_bucket, nombre_dataset, nombre_carpeta_construmart, nombre_archivo, parametros["construmartTabla"])
+        #Sube dataframe de Sodimac a GCP
+        funciones.subir_dataframe_cloud(df_sodimac, nombre_proyecto, nombre_bucket, nombre_dataset, nombre_carpeta_sodimac, nombre_archivo, parametros["sodimacTabla"])
+        #Sube dataframe de Easy a GCP
+        funciones.subir_dataframe_cloud(df_easy, nombre_proyecto, nombre_bucket, nombre_dataset, nombre_carpeta_easy, nombre_archivo, parametros["easyTabla"])
+        return 'Archivo CSV y DataFrame subido exitosamente.'
+    except Exception as e:
+        return f'Hubo un error: {str(e)}'
+    
 
 '''Configuraciones para el servidor de flask'''
 if __name__ == "__main__":

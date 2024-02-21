@@ -6,13 +6,183 @@
         }
     ],
 
-    "labels": {
-        "environment": "dev",
-        "project-owner": "datos-arquitectura",
-        "state": "active",
-        "team": "marketing-maderas",
-        "ce-co": "1cl2704222"
+    "construmartTabla": {
+
+        "descripcionTabla": "Esta tabla almacena información detallada sobre los precios de distintos tipos de madera disponibles en Construmart. Cada registro incluye un enlace directo al producto, una descripción detallada del tipo de madera, el precio actual, la fecha en la que se extrajo la información del sitio web de la tienda, y la marca del producto. Esta tabla se actualiza regularmente para reflejar los cambios en los precios y proporcionar una referencia actualizada para análisis de mercado y tendencias de precios de maderas.",
+        
+        "tableSchema": [
+            {
+                "name": "fecha",
+                "type": "DATE",
+                "description": "Fecha de extraccion",
+                "mode": "REQUIRED"
+            },
+            {
+                "name": "link",
+                "type": "STRING",
+                "description": "Link del producto",
+                "mode": "REQUIRED"
+            },
+            {
+                "name": "tienda",
+                "type": "STRING",
+                "description": "Tienda a la que pertenece el producto",
+                "mode": "REQUIRED"
+            },
+            {
+                "name": "precio",
+                "type": "INTEGER",
+                "description": "Precio del producto",
+                "mode": "REQUIRED"
+            },
+            {
+                "name": "marca",
+                "type": "STRING",
+                "description": "Marca del producto",
+                "mode": "REQUIRED"
+            },
+            {
+                "name": "descripcion",
+                "type": "STRING",
+                "description": "Descripcion del producto",
+                "mode": "REQUIRED"
+            },
+            {
+                "name": "region",
+                "type": "STRING",
+                "description": "Region de la tienda",
+                "mode": "REQUIRED"
+            },
+            {
+                "name": "comuna",
+                "type": "STRING",
+                "description": "Region de la comuna",
+                "mode": "REQUIRED"
+            }
+        ],
+
+        "labels": {
+            "environment": "dev",
+            "project-owner": "datos-arquitectura",
+            "state": "active",
+            "team": "marketing-maderas",
+            "ce-co": "1cl2704222"
+        }
     },
 
-    "descripcionTablas": "Esta tabla almacena información detallada sobre los precios de distintos tipos de madera disponibles en tiendas nacionales. Cada registro incluye un enlace directo al producto, una descripción detallada del tipo de madera, el precio actual, la fecha en la que se extrajo la información del sitio web de la tienda, y la marca del producto. Esta tabla se actualiza regularmente para reflejar los cambios en los precios y proporcionar una referencia actualizada para análisis de mercado y tendencias de precios de maderas."
+    "sodimacTabla": {
+
+        "descripcionTabla": "Esta tabla almacena información detallada sobre los precios de distintos tipos de madera disponibles en Sodimac y esta separado por categorias. Cada registro incluye un enlace directo al producto, una descripción detallada del tipo de madera, el precio actual, la fecha en la que se extrajo la información del sitio web de la tienda, y la marca del producto. Esta tabla se actualiza regularmente para reflejar los cambios en los precios y proporcionar una referencia actualizada para análisis de mercado y tendencias de precios de maderas.",
+
+        "tableSchema": [
+            {
+                "name": "fecha",
+                "type": "DATE",
+                "description": "Fecha de extraccion",
+                "mode": "REQUIRED"
+            },
+            {
+                "name": "link",
+                "type": "STRING",
+                "description": "Link del producto",
+                "mode": "REQUIRED"
+            },
+            {
+                "name": "tienda",
+                "type": "STRING",
+                "description": "Tienda a la que pertenece el producto",
+                "mode": "REQUIRED"
+            },
+            {
+                "name": "precio",
+                "type": "INTEGER",
+                "description": "Precio del producto",
+                "mode": "REQUIRED"
+            },
+            {
+                "name": "marca",
+                "type": "STRING",
+                "description": "Marca del producto",
+                "mode": "REQUIRED"
+            },
+            {
+                "name": "descripcion",
+                "type": "STRING",
+                "description": "Descripcion del producto",
+                "mode": "REQUIRED"
+            },
+            {
+                "name": "categoria",
+                "type": "STRING",
+                "description": "Categoria del producto",
+                "mode": "REQUIRED"
+            }
+        ],
+
+        "labels": {
+            "environment": "dev",
+            "project-owner": "datos-arquitectura",
+            "state": "active",
+            "team": "marketing-maderas",
+            "ce-co": "1cl2704222"
+        }
+    },
+
+    "easyTabla": {
+
+        "descripcionTabla": "Esta tabla almacena información detallada sobre los precios de distintos tipos de madera disponibles en Easy y esta separado por categorias. Cada registro incluye un enlace directo al producto, una descripción detallada del tipo de madera, el precio actual, la fecha en la que se extrajo la información del sitio web de la tienda, y la marca del producto. Esta tabla se actualiza regularmente para reflejar los cambios en los precios y proporcionar una referencia actualizada para análisis de mercado y tendencias de precios de maderas.",
+
+        "tableSchema": [
+            {
+                "name": "fecha",
+                "type": "DATE",
+                "description": "Fecha de extraccion",
+                "mode": "REQUIRED"
+            },
+            {
+                "name": "link",
+                "type": "STRING",
+                "description": "Link del producto",
+                "mode": "REQUIRED"
+            },
+            {
+                "name": "tienda",
+                "type": "STRING",
+                "description": "Tienda a la que pertenece el producto",
+                "mode": "REQUIRED"
+            },
+            {
+                "name": "precio",
+                "type": "INTEGER",
+                "description": "Precio del producto",
+                "mode": "REQUIRED"
+            },
+            {
+                "name": "marca",
+                "type": "STRING",
+                "description": "Marca del producto",
+                "mode": "REQUIRED"
+            },
+            {
+                "name": "descripcion",
+                "type": "STRING",
+                "description": "Descripcion del producto",
+                "mode": "REQUIRED"
+            },
+            {
+                "name": "categoria",
+                "type": "STRING",
+                "description": "Categoria del producto",
+                "mode": "REQUIRED"
+            }
+        ],
+
+        "labels": {
+            "environment": "dev",
+            "project-owner": "datos-arquitectura",
+            "state": "active",
+            "team": "marketing-maderas",
+            "ce-co": "1cl2704222"
+        }
+    }
 }
